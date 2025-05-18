@@ -1,0 +1,12 @@
+# CDK
+aws-cdk-lib==2.195.0
+constructs>=10.0.0,<11.0.0
+
+# AWS CDK dependencies
+cdk-aws-lambda-powertools-layer
+aws-lambda-powertools
+
+# Testing and linting
+pytest>=7.0.0
+pylint>=2.15.0
+black>=22.0

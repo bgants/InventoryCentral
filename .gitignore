@@ -1,0 +1,42 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# CDK output
+cdk.out/
+
+# MyPy cache
+.mypy_cache/
+
+# VSCode and other editor settings
+.vscode/
+.idea/
+*.swp
+
+# Python egg files
+*.egg-info/
+.eggs/
+
+# Pipenv and Poetry files
+Pipfile.lock
+poetry.lock
+
+# Node modules (for frontend or CDK with JS)
+node_modules/
+
+# React build output
+src/frontend/build/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# OS-generated files
+.DS_Store
