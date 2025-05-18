@@ -6,6 +6,10 @@ constructs>=10.0.0,<11.0.0
 cdk-aws-lambda-powertools-layer
 aws-lambda-powertools
 
+# Boto
+boto3>=1.26.0
+botocore>=1.29.0
+
 # Testing and linting
 pytest>=7.0.0
 pylint>=2.15.0

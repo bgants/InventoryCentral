@@ -2,11 +2,14 @@ from aws_cdk import (
     CfnOutput,
     Stack,
     aws_lambda as _lambda,
+    aws_dynamodb as dynamodb,
+    RemovalPolicy,
     aws_apigateway as apigateway,
     aws_route53 as route53,
     aws_certificatemanager as acm,
     aws_route53_targets as targets,
 )
+
 from constructs import Construct
 from cdk_aws_lambda_powertools_layer import LambdaPowertoolsLayer
 
@@ -53,6 +56,36 @@ class BackendStack(Stack):
                 "POWER_TOOLS_LOG_LEVEL": "INFO",
             },
         )
+
+        # Create a DynamoDB table
+        inventory_table = dynamodb.Table(
+            self,
+            "InventoryTable",
+            table_name="InventoryTable",
+            partition_key=dynamodb.Attribute(
+                name="product_id", type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="location_id", type=dynamodb.AttributeType.STRING
+            ),
+            billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.DESTROY,  # NOT recommended for production code
+        )
+
+        # Add a GSI for querying by location_id
+        inventory_table.add_global_secondary_index(
+            index_name="ByLocation",
+            partition_key=dynamodb.Attribute(
+                name="location_id", type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="product_id", type=dynamodb.AttributeType.STRING
+            ),
+            projection_type=dynamodb.ProjectionType.ALL,  # or KEYS_ONLY, INCLUDE
+        )
+
+        # Give permission to lambda to use table
+        inventory_table.grant_read_write_data(Lambda_function)
 
         # Create an API Gateway
         api = apigateway.LambdaRestApi(
