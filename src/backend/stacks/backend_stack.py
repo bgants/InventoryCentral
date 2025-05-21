@@ -69,7 +69,7 @@ class BackendStack(Stack):
                 name="location_id", type=dynamodb.AttributeType.STRING
             ),
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
-            removal_policy=RemovalPolicy.DESTROY,  # NOT recommended for production code
+            removal_policy=RemovalPolicy.DESTROY,
         )
 
         # Add a GSI for querying by location_id
