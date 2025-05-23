@@ -1,2 +1,5 @@
 [MASTER]
 ignore-patterns=__init__\.py,cdk\.out.*,.*\.venv/.
+# AWS Lambda wants flat runtime imports, add this to make pylint happy
+# it tells pylint to pretend runtime/ is the import root
+init-hook='import sys; sys.path.append("backend/api/runtime")'

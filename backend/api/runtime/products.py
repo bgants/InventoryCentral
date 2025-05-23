@@ -3,6 +3,7 @@ from aws_lambda_powertools.event_handler import APIGatewayRestResolver
 from botocore.exceptions import ClientError
 from resources import logger, table
 
+
 def register_product_routes(app: APIGatewayRestResolver):
     @app.get("/products/<product_id>")
     def get_product(product_id: str):
@@ -17,7 +18,6 @@ def register_product_routes(app: APIGatewayRestResolver):
             logger.error(f"Error getting product: {str(e)}")
             return {"statusCode": 500, "body": str(e)}
 
-
     @app.post("/products")
     def create_product():
         logger.info("Create product")
@@ -29,7 +29,11 @@ def register_product_routes(app: APIGatewayRestResolver):
             items = {
                 "product_id": product_id,
                 "location_id": location_id,
-                **{k: v for k, v in body.items() if k not in ["product_id", "location_id"]},
+                **{
+                    k: v
+                    for k, v in body.items()
+                    if k not in ["product_id", "location_id"]
+                },
             }
 
             table.put_item(Item=items)
@@ -45,7 +49,6 @@ def register_product_routes(app: APIGatewayRestResolver):
         except ClientError as e:
             logger.error(f"Error creating product: {str(e)}")
             return {"statusCode": 500, "body": str(e)}
-
 
     @app.put("/products/<product_id>/<location_id>")
     def update_product(product_id: str, location_id: str):
@@ -76,12 +79,13 @@ def register_product_routes(app: APIGatewayRestResolver):
         except ClientError as e:
             logger.error(f"Error updating product: {str(e)}")
 
-
     @app.delete("/products/<product_id>/<location_id>")
     def delete_product(product_id: str, location_id: str):
         logger.info(f"Delete product with ID: {product_id} at location: {location_id}")
         try:
-            table.delete_item(Key={"product_id": product_id, "location_id": location_id})
+            table.delete_item(
+                Key={"product_id": product_id, "location_id": location_id}
+            )
             logger.info(f"Deleted: {product_id} at {location_id}")
             return {
                 "statusCode": 200,
