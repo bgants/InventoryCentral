@@ -8,6 +8,15 @@ __pycache__/
 env/
 venv/
 
+# pytest cache
+.cache/
+.cache
+.pytest_cache
+
+# Coverage reports
+.coverage
+.coverage.*
+
 # CDK output
 cdk.out/
 

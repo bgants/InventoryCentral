@@ -14,7 +14,7 @@ format:
 
 lint:
 	@echo "Linting code with Pylint..."
-	pylint --disable=R,C $(shell find . -name "*.py" ! -path "./.venv/*")
+	pylint --disable=R,C backend app.py
 
 test:
 	@echo "Running tests..."
