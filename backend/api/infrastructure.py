@@ -64,13 +64,14 @@ class API(Construct):
         )
 
         products = self.rest_api.root.add_resource("products")
-        products.add_method("GET")  # GET /products
         products.add_method("POST")  # POST /products
 
         product_id = products.add_resource("{product_id}")
         product_id.add_method("GET")  # GET /products/{product_id}
-        product_id.add_method("PUT")  # PUT /products/{product_id}
-        product_id.add_method("DELETE")  # DELETE /products/{product_id}
+
+        location_id = product_id.add_resource("{location_id}")
+        location_id.add_method("PUT")  # PUT /products/{product_id}/{location_id}
+        location_id.add_method("DELETE")  # DELETE /products/{product_id}/{location_id}
 
         self.apigateway_domain_name = apigateway.DomainName(
             self,
