@@ -2,15 +2,33 @@ name: Build
 
 on: [push]
 
+env:
+  AWS_REGION : "us-east-1"
+
+# Permission can be added at job level or workflow level    
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
-          python-version: '3.10'
-      - run: |
-          pip install -r requirements.txt
-          npm install -g aws-cdk
-      - run: make build
+          role-to-assume: arn:aws:iam::118852046471:role/GitHubAction-AssumeRoleWithAction #change to reflect your IAM role’s ARN
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}
+      # Hello from AWS: WhoAmI
+      - name: Sts GetCallerIdentity
+        run: |
+          aws sts get-caller-identity
+      # - uses: actions/setup-python@v4
+      #   with:
+      #     python-version: '3.10'
+      # - run: |
+      #     pip install -r requirements.txt
+      #     npm install -g aws-cdk
+      # - run: make build
