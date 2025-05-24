@@ -41,4 +41,4 @@ clean:
 	find . -type d -name "__pycache__" -exec rm -r {} + || true
 	rm -rf .pytest_cache
 
-build: format lint test
+build: format lint test synth
