@@ -1,0 +1,1 @@
+[![Build](https://github.com/bgants/InventoryCentral/actions/workflows/build.yml/badge.svg)](https://github.com/bgants/InventoryCentral/actions/workflows/build.yml)
