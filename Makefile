@@ -18,7 +18,7 @@ lint:
 
 test:
 	@echo "Running tests..."
-	pytest -vv ./tests/unit/test_*.py
+	pytest -vv ./backend/tests/unit/test_backend_stack.py
 
 synth:
 	@echo "Synthesizing the CDK app..."
@@ -41,4 +41,4 @@ clean:
 	find . -type d -name "__pycache__" -exec rm -r {} + || true
 	rm -rf .pytest_cache
 
-all: install format lint test
+build: format lint test
