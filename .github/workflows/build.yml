@@ -4,7 +4,6 @@ on: [push]
 
 env:
   AWS_PRIMARY_REGION: "us-east-1"
-  AWS_SECONDARY_REGION: "us-west-2"
   AWS_DOMAIN_NAME: "dungeondivinelabs.com"
 # Permission can be added at job level or workflow level    
 permissions:
@@ -23,6 +22,10 @@ jobs:
           role-to-assume: arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/GitHubAction-AssumeRoleWithAction #change to reflect your IAM role’s ARN
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_PRIMARY_REGION }}
+      - name: Debug AWS Environment Variables
+        run: |
+          echo "CDK_DEFAULT_ACCOUNT: $CDK_DEFAULT_ACCOUNT"
+          echo "CDK_DEFAULT_REGION: $CDK_DEFAULT_REGION"
       - name: Sts GetCallerIdentity
         run: |
           aws sts get-caller-identity
