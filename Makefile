@@ -24,10 +24,6 @@ synth:
 	@echo "Synthesizing the CDK app..."
 	cdk synth
 
-deploy:
-	@echo "Deploying the CDK stack..."
-	cdk deploy --require-approval never
-
 diff:
 	@echo "Showing diff against deployed stack..."
 	cdk diff
@@ -42,3 +38,7 @@ clean:
 	rm -rf .pytest_cache
 
 build: format lint test synth
+
+deploy: build
+	@echo "Deploying the application..."
+	cdk deploy --require-approval never

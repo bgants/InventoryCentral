@@ -1,6 +1,7 @@
 name: Build
 
-on: [push]
+on:
+  workflow_dispatch: # Manual trigger 
 
 env:
   AWS_PRIMARY_REGION: "us-east-1"
@@ -35,4 +36,4 @@ jobs:
       - run: |
           pip install -r requirements.txt
           npm install -g aws-cdk
-      - run: make build
+      - run: make deploy
