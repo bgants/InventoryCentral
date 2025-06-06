@@ -2,7 +2,7 @@ import json
 from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
-from runtime.lambda_function import handler
+from runtime.lambda_function import handler  # pylint: disable=import-error
 
 
 def mock_api_gateway_post_event():
@@ -51,6 +51,7 @@ def mock_lambda_context():
         aws_request_id="test-invoke-request",
     )
 
+
 # Test for GETPOST /products
 @patch("resources.get_table")
 def test_create_product(mock_get_table):
@@ -59,14 +60,15 @@ def test_create_product(mock_get_table):
     mock_get_table.return_value = mock_table_instance
 
     # Mock the put_item to do nothing (or return a fake response if needed)
-    mock_table_instance.put_item.return_value = {"ResponseMetadata": {"HTTPStatusCode": 200}}
+    mock_table_instance.put_item.return_value = {
+        "ResponseMetadata": {"HTTPStatusCode": 200}
+    }
 
     # Call the handler
     response = handler(mock_api_gateway_post_event(), mock_lambda_context())
 
     # Assertions
     assert int(response["statusCode"]) == 200
-
 
     response = handler(mock_api_gateway_post_event(), mock_lambda_context())
 
