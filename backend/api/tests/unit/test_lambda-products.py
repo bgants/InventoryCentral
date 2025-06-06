@@ -52,7 +52,7 @@ def mock_lambda_context():
     )
 
 
-# Test for GETPOST /products
+# Test for POST /products
 @patch("resources.get_table")
 def test_create_product(mock_get_table):
     # Create a mock table instance
