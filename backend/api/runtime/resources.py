@@ -4,6 +4,9 @@ import boto3
 # Powertools logger
 logger = Logger()
 
+
 # DynamoDB client or resource
-dynamodb = boto3.resource("dynamodb")
-table = dynamodb.Table("InventoryTable")
+def get_table():
+    dynamodb = boto3.resource("dynamodb")
+    table = dynamodb.Table("InventoryTable")
+    return table

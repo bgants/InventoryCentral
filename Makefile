@@ -18,7 +18,7 @@ lint:
 
 test:
 	@echo "Running tests..."
-	pytest -vv ./backend/tests/unit/test_backend_stack.py
+	PYTHONPATH=./backend/api/runtime pytest -vv -s ./backend/api/tests/unit/*.py
 
 synth:
 	@echo "Synthesizing the CDK app..."
