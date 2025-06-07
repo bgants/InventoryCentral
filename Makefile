@@ -14,7 +14,7 @@ format:
 
 lint:
 	@echo "Linting code with Pylint..."
-	pylint --disable=R,C backend app.py
+	pylint --disable=R,C ./backend app.py
 
 test:
 	@echo "Running tests..."
@@ -33,9 +33,10 @@ destroy:
 	cdk destroy --force
 
 clean:
-	@echo "Cleaning up __pycache__ and .pytest_cache..."
+	@echo "Cleaning up __pycache__ and .pytest_cache, removing cdk.out directory..."
 	find . -type d -name "__pycache__" -exec rm -r {} + || true
 	rm -rf .pytest_cache
+	rm -rf cdk.out
 
 build: format lint test synth
 
